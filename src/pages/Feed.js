@@ -40,15 +40,13 @@ export default class Feed extends Component {
 
         socket.on('like', likedPost => {
             this.setState({ 
-                feed: this.state.feed.map(post => {
-                    likedPost._id === post._id ? likedPost : post    
-                }) 
+                feed: this.state.feed.map(post => likedPost._id === post._id ? likedPost : post) 
             });
         })
     }
 
-    handleLike = async id => {
-        await api.post(`/posts/${id}/like`);
+    handleLike = id => {
+        api.post(`/posts/${id}/like`);
     }
 
     render() {
@@ -72,7 +70,7 @@ export default class Feed extends Component {
 
                             <View style={styles.feedItemFooter}>
                                 <View style={styles.actions}>
-                                    <TouchableOpacity style={styles.action} onPress={() => {this.handleLike(item._id)}}>
+                                    <TouchableOpacity style={styles.action} onPress={() => this.handleLike(item._id)}>
                                         <Image source={like} />
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.action} onPress={() => {}}>
